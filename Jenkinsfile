@@ -1,18 +1,18 @@
 pipeline {
     agent any 
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('valaxy-dockerhub')
+    DOCKERHUB_CREDENTIALS = credentials('valaxy-dockerhub-azure')
     }
     stages { 
         stage('SCM Checkout') {
             steps{
-            git 'https://github.com/tuminbangkok/nodejs-demo.git'
+            git 'https://github.com/tuminbangkok/nodejs-demo-azure.git'
             }
         }
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t tuminbangkok/nodeapp:$BUILD_NUMBER .'
+                sh 'docker build -t tuminbangkok/nodeappazure:$BUILD_NUMBER .'
             }
         }
         stage('login to dockerhub') {
@@ -22,7 +22,7 @@ pipeline {
         }
         stage('push image') {
             steps{
-                sh 'docker push tuminbangkok/nodeapp:$BUILD_NUMBER'
+                sh 'docker push tuminbangkok/nodeappazure:$BUILD_NUMBER'
             }
         }
 }
